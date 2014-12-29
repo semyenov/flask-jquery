@@ -48,14 +48,15 @@ def add(num1,num2):
 	context = {'num1':num1,'num2':num2}
 	return render_template('add.html',**context)
 
-@app.route('/send', methods=['GET'])
+@app.route('/send', methods=['POST'])
 def send():
-	user = request.args.get('user', 2, type=str)
-	text = request.args.get('text', 0, type=str)
+	user = request.form['user']
+	text = request.form['text']
+	print '\n ***NEW MESSAGE***'
+	print user + ' <- user'
+	print text + ' <- text \n'
 	if text:
-		print '\n ***NEW MESSAGE***'
-		print user + ' <- user'
-		print text + ' <- text \n'
+		
 		con = lite.connect(DATABASE)
 		cur = con.cursor()
 		# Insert a row of data
@@ -66,7 +67,7 @@ def send():
 
 @app.route('/update', methods=['GET'])
 def update():
-	user = request.args.get('user', 2, type=str)
+	user = request.args.get('user')
 	if user:
 		con = lite.connect(DATABASE)
 		cur = con.cursor()
