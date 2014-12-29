@@ -22,7 +22,7 @@ $(function() {
 				console.log(data.text);
 				$('button').text('Отправить');
 				$('textarea[name="text"]').val('');
-				$('#chat').append('<p class="text-right">'+$CHAT_NAME+': <strong>'+data.text+'</strong></p>');
+				$('#chat').append('<p class="text-right" style="margin-right: -8.33%"> - me <strong><pre style="background-color: purple; color: white;">'+data.text+'</pre></strong></p>');
 			}
 		});
 		return false;
@@ -38,7 +38,7 @@ $(function() {
 			data: {user: $CHAT_NAME},
 			success: function(data) {
 				$.each(data.messages, function(i, message){
-					$('#chat').append('<p class="text-left">'+message.user+': <strong>'+message.text+'</strong></p>')
+					$('#chat').append('<p class="text-left" style="margin-left: -8.33%">'+message.user+' - <strong><pre>'+message.text+'</pre></strong></p>')
 				})
 			}
 		});
