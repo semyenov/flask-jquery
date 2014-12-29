@@ -64,4 +64,25 @@ def send():
 		con.commit()
 	return json.jsonify(text=text)
 
+@app.route('/update', methods=['GET'])
+def update():
+	user = request.args.get('user', 2, type=str)
+	if user:
+		con = lite.connect(DATABASE)
+		cur = con.cursor()
+		# Insert a row of data
+		# cur.execute('SELECT * FROM messages WHERE read=0 AND user <> ? ;', (user,))
+		# messages = cur.fetchone()
+		# print messages
+		# messages = cur.fetchone()
+		# print messages
+		messages = []
+		for message in cur.execute('SELECT * FROM messages WHERE read=0 AND user <> ? ;', (user,)):
+			messages += [{'user':message[1],'text':message[2]}]
+			cur.execute("UPDATE messages SET read = 1 WHERE id = ?",(message[0],))
+
+		# Save (commit) the changes
+		con.commit()
+	return json.jsonify(messages=messages)
+
 app.run(debug=True)
