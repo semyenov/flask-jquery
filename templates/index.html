@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+{% block title %}Type! : {{ super() }}{% endblock %}
+{% block styles %}<link rel="stylesheet" type="text/css" href="/static/css/style.css">{% endblock %}
+{% block content %}
+
+<form action="{{ url_for('save') }}" method="POST" class="form-inline" role="form">
+
+	<div class="form-group">
+		<label class="sr-only" for="dog-name">Как зовут собачку?</label>
+		<input type="text" class="form-control" name="dog-name" placeholder="Имя собачки">
+	</div>
+
+	
+
+	<button type="submit" class="btn btn-default">Отправить</button>
+</form>
+{% endblock %}
+{% block scripts %}<script src="/static/js/script.js"></script>{% endblock %}
