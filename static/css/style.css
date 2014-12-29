@@ -2,3 +2,12 @@ body{
 	background-color: purple;
 	color: white;
 }
+
+#chat {
+	padding-bottom: 30px;
+}
+
+pre.me{
+	background-color: purple;
+	color: white;
+}

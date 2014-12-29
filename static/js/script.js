@@ -22,7 +22,7 @@ $(function() {
 				console.log(data.text);
 				$('button').text('Отправить');
 				$('textarea[name="text"]').val('');
-				$('#chat').append('<p class="text-right" style="margin-right: -8.33%"> - me <strong><pre style="background-color: purple; color: white;">'+data.text+'</pre></strong></p>');
+				$('#chat').append('<p class="text-right" style="margin-right: -8.33%"> - me <strong><pre class="me">'+data.text+'</pre></strong></p>');
 			}
 		});
 		return false;
