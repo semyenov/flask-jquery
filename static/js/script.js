@@ -26,10 +26,10 @@ $(function() {
 				console.log(data.text);
 				$('#form button').text('Отправить');
 				$('textarea[name="text"]').val('');
-				$('#chat').append('<p class="text-right"> - me <strong><pre>'+data.text+'</pre></strong></p>');
+				$('#chat').append('<p class="text-right"> &#9889; me <strong><pre>'+data.text+'</pre></strong></p>');
 			},
 			error: function(){
-				$('#chat').append('<p class="text-right"><strong>SOMETHING WRONG HAPPEND!</strong></p>');
+				$('#chat').append('<p class="text-right"><strong> &#9888; SOMETHING WRONG HAPPEND!</strong></p>');
 				$('#form button').addClass('disabled');
 			}
 		});
@@ -47,9 +47,11 @@ $(function() {
 			data: {user: $CHAT_NAME},
 			success: function(data) {
 				console.log(data.messages)
+				$('#form button').removeClass('disabled');
+				$('#form button').text('Отправить');
 				$.each(data.messages, function(i, message){
 					console.log(i, message);
-					$('#chat').append('<p class="text-left">'+message.user+' - <strong><pre class="inbox">'+message.text+'</pre></strong></p>')
+					$('#chat').append('<p class="text-left">'+message.user+' &#9889; <strong><pre class="inbox">'+message.text+'</pre></strong></p>')
 				})
 			}
 		});
