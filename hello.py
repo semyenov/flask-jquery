@@ -77,11 +77,11 @@ def update():
 		# print messages
 		# messages = cur.fetchone()
 		# print messages
+		cur.execute('SELECT * FROM messages WHERE read=0 AND user <> ? ;', (user,))
 		messages = []
-		for message in cur.execute('SELECT * FROM messages WHERE read=0 AND user <> ? ;', (user,)):
+		for message in cur.fetchall():
 			messages += [{'user':message[1],'text':message[2]}]
 			cur.execute("UPDATE messages SET read = 1 WHERE id = ?",(message[0],))
-
 		# Save (commit) the changes
 		con.commit()
 	return json.jsonify(messages=messages)

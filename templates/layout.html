@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>{% block title %}Is cool!{% endblock %}</title>
+		<title>{% block title %}is COOl!{% endblock %}</title>
 
 		<!-- Bootstrap CSS -->
 		<link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
@@ -20,7 +20,42 @@
 		<![endif]-->
 	</head>
 	<body>
-		<h1 class="text-center">What is the dog name?</h1>
+		<!-- header -->
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-10 col-xs-offset-1">
+					<nav class="navbar navbar-default" role="navigation">
+						<!-- Brand and toggle get grouped for better mobile display -->
+						<div class="navbar-header">
+							<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+								<span class="sr-only">Toggle navigation</span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+								<span class="icon-bar"></span>
+							</button>
+							<a class="navbar-brand" href="#">Dog Went Missing</a>
+						</div>
+					
+						<!-- Collect the nav links, forms, and other content for toggling -->
+						<div class="collapse navbar-collapse navbar-ex1-collapse">
+							<ul class="nav navbar-nav navbar-right">
+								<li><a href="/add/7/5">Сложение</a></li>
+								<li class="dropdown">
+									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Пользователи <b class="caret"></b></a>
+									<ul class="dropdown-menu">
+										<li><a href="/Alexander">Alexander</a></li>
+										<li><a href="/Andrew">Andrew</a></li>
+										<li><a href="/Veronica">Veronica</a></li>
+										<li><a href="/Antony">Antony</a></li>
+									</ul>
+								</li>
+							</ul>
+						</div><!-- /.navbar-collapse -->
+					</nav>
+				</div>
+			</div>
+		</div>
+		<!-- content -->
 		<div class="container">
 			<div class="row">
 				<div class="col-xs-10 col-xs-offset-1">

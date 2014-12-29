@@ -1,13 +1,26 @@
 body{
-	background-color: purple;
-	color: white;
+	background-image: -webkit-linear-gradient(left, rgba(243, 231, 243, 0.99) 50%, rgba(244, 233, 244, 0.99) 100%);
+	background-image: -o-linear-gradient(left, rgba(243, 231, 243, 0.99) 50%, rgba(244, 233, 244, 0.99) 100%);
+	background-image: linear-gradient(to right, rgba(243, 231, 243, 0.99) 50%, rgba(244, 233, 244, 0.99) 100%);
+	color: purple;
+}
+.navbar-default .navbar-brand {
+	color: purple;
 }
 
 #chat {
-	padding-bottom: 30px;
+	padding-bottom: 40px;
+}
+#chat .text-right {
+	margin-right: -8.33%;
 }
 
-pre.me{
+#chat .text-left {
+	margin-left: -8.33%;
+}
+
+
+pre.inbox{
 	background-color: purple;
 	color: white;
 }
