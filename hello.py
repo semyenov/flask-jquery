@@ -6,35 +6,36 @@ from flask import (request, render_template,
 
 app = Flask(__name__)
 
-# Database configuration and helpers
-DATABASE = 'tmp/chat.db'
+# SqlAlchemy
 
-con = lite.connect(DATABASE)
-cur = con.cursor()
+from sqlalchemy import create_engine
+engine = create_engine('postgresql://postgres:22061945@localhost:5432/flaskdb')
 
-# cur.executescript("""
-# 	drop table if exists messages;
-# 	create table messages (
-# 		id integer primary key autoincrement,
-# 		author text not null,
-# 		text text not null,
-# 		read boolean not null
-# 	);
-#     """)
-# cur.execute("INSERT INTO messages('author',text,read) VALUES('author','text',False);")
-# con.commit()
+from sqlalchemy import Table, Column, Integer, String, Text, Boolean, MetaData, ForeignKey
 
-# Create clean table
-cur.execute('DROP TABLE IF EXISTS messages;')
-cur.execute('''
-	CREATE TABLE messages(
-		id integer primary key autoincrement,
-		user text not null,
-		text text not null,
-		read integer not null
-	)''')
 
-# Database end 
+from sqlalchemy.ext.declarative import declarative_base
+Base = declarative_base()
+
+class Message(Base):
+	__tablename__ = 'messages'
+	id = Column(Integer, primary_key=True)
+	user = Column(String)
+	text = Column(Text)
+	read = Column(Boolean)
+ 
+	def __init__(self, user, text, read):
+		self.user = user
+		self.text = text
+		self.read = read
+	def __repr__(self):
+		return "User:%s'\nMessage:'%s'\nRead:'%s'"%(self.user, self.text, self.read)
+	def serialize(self):
+		return [{'user': self.user, 'text':self.text}]
+
+from sqlalchemy.orm import sessionmaker
+Session = sessionmaker(bind=engine)
+session = Session()
 
 
 @app.route('/')
@@ -52,38 +53,24 @@ def add(num1,num2):
 def send():
 	user = request.form['user']
 	text = request.form['text']
-	print '\n ***NEW MESSAGE***'
-	print user + ' <- user'
-	print text + ' <- text \n'
 	if text:
-		
-		con = lite.connect(DATABASE)
-		cur = con.cursor()
-		# Insert a row of data
-		cur.execute("INSERT INTO messages(user,text,read) VALUES(?,?,0);",(user,text))
-		# Save (commit) the changes
-		con.commit()
+		message = Message(user,text,False)
+		session.add(message)
+		session.commit()
+		print json.jsonify(text=text)
 	return json.jsonify(text=text)
 
 @app.route('/update', methods=['GET'])
 def update():
 	user = request.args.get('user')
 	if user:
-		con = lite.connect(DATABASE)
-		cur = con.cursor()
-		# Insert a row of data
-		# cur.execute('SELECT * FROM messages WHERE read=0 AND user <> ? ;', (user,))
-		# messages = cur.fetchone()
-		# print messages
-		# messages = cur.fetchone()
-		# print messages
-		cur.execute('SELECT * FROM messages WHERE read=0 AND user <> ? ;', (user,))
-		messages = []
-		for message in cur.fetchall():
-			messages += [{'user':message[1],'text':message[2]}]
-			cur.execute("UPDATE messages SET read = 1 WHERE id = ?",(message[0],))
+		post = []
+		messages = session.query(Message).filter(Message.user!=user).filter(Message.read==False).all()
+		for message in messages:
+			post += message.serialize()
+			message.read=True;
 		# Save (commit) the changes
-		con.commit()
-	return json.jsonify(messages=messages)
+		session.commit()
+	return json.jsonify(messages=post)
 
 app.run(debug=True)

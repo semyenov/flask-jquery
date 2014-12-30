@@ -6,6 +6,7 @@ body{
 }
 .navbar-default .navbar-brand {
 	color: purple;
+	text-transform: uppercase;
 }
 
 #chat {
